@@ -1,30 +1,54 @@
 # Automated Tests for Echo 
 The project is intended for testing Echo. Includes testing:
-* [Api](https://echo-dev.io/developers/apis/)
-* [Operations](https://echo-dev.io/developers/operations/)
+* [**Echo Node API**](https://docs.echo.org/api-reference/echo-node-api)
+* [**Echo Operations**](https://docs.echo.org/api-reference/echo-operations)
 * Testing according to specified scenarios
 
 ## Installation
-
 ### Manual installation:
-
+#### Windows
     $ git clone https://gitlab.pixelplex.by/631_echo/pytests.git
     $ cd pytests
     $ virtualenv venv
     $ .\venv\Scripts\activate
     $ pip install -r requirements.txt
 
-## Usage
+#### Linux
+    $ git clone https://gitlab.pixelplex.by/631_echo/pytests.git
+    $ cd pytests
+    $ virtualenv venv
+    $ source .\venv\bin\activate
+    $ pip install -r requirements.txt
+    
+#### Mac OS
+*please see Linux installation*
 
+## Usage
 ### Note:
-Before running the tests, you can specify a environment variables, examples: *BASE_URL*, *NATHAN_PK*. 
-For this you need, example:
+##### Before running the tests, you should specify a environment variables: 
+- *BASE_URL* - URL on which tests will be connected to the Echo node
+- *ETHEREUM_URL* - URL on which tests will be connected to the Ethereum node
+- *NATHAN_PK* - private key of "nathan" account
+- *INIT0_PK* - private key of "init0" initial account
+
+##### Optional:
+- *ROPSTEN* - flag to run tests in the ropsten network (bool type)
+- *DEBUG* - run tests with debug mode that log all in\out communication messages with Echo node (bool type)
+
+##### For this you need, example:
 * Linux OS: export BASE_URL=_[needed_url]()_
 * Windows OS: set BASE_URL=_[needed_url]()_
 
-After that you can use following commands:
+### Run docker to use Echo and Ethereum nodes locally:
+    $ cd pytests
+    $ docker-compose pull
+    $ docker-compose up build --no-cache
+    $ docker-compose up migrate
+    $ docker-compose up pytests
+
+### To run tests you can use following commands in console:
     
-Filter                       | lcc commands
+Filter                           | lcc commands
 ---------------------------------|----------------------
 Run all tests                    | `$ lcc run`
 Run tests with special tag       | `$ lcc run -a tag_name`
@@ -40,21 +64,19 @@ Run tests from special report    | `$ lcc run --from-report path_to_report`
 
 _note:_ can combine run options, for example - `$ lcc run --failed --from-report reports/report-2`
 
-## To Do Lists
+## Echo Node API:
 
-### Apis:
+### Login API
 
-#### [Login API](https://echo-dev.io/developers/apis/login-api/#login-api)
+- [x] [login](https://docs.echo.org/api-reference/echo-node-api/login-api#login-user-password)
 
-- [x] [login](https://echo-dev.io/developers/apis/login-api/#loginstring-user-string-password)
+### Asset API
 
-#### [Asset API](https://echo-dev.io/developers/apis/asset-api/#asset-api)
+- [x] [get_asset_holders](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_asset_holders-string-asset_id-int-start-int-limit)
+- [x] [get_asset_holders_count](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_asset_holders_count-string-asset_id)
+- [x] [get_all_asset_holders](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_all_asset_holders)
 
-- [x] [get_asset_holders](https://echo-dev.io/developers/apis/asset-api/#get_asset_holdersstring-asset_id-int-start-int-limit)
-- [x] [get_asset_holders_count](https://echo-dev.io/developers/apis/asset-api/#get_asset_holders_countstring-asset_id)
-- [x] [get_all_asset_holders](https://echo-dev.io/developers/apis/asset-api/#get_all_asset_holders)
-
-#### [Database API](https://echo-dev.io/developers/apis/database-api/#database-api)
+### Database API
 
 - [x] [get_global_properties](https://echo-dev.io/developers/apis/database-api/#get_global_properties)
 - [x] [get_required_fees](https://echo-dev.io/developers/apis/database-api/#get_required_feesops-id)
@@ -120,26 +142,26 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] get_contract_pool_balance
 - [x] check_erc20_token
 
-#### [History API](https://echo-dev.io/developers/apis/history-api/#history-api)
+### History API
 
 - [x] [get_account_history](https://echo-dev.io/developers/apis/history-api/#get_account_historyaccount-stop-limit-100-start)
 - [x] [get_relative_account_history](https://echo-dev.io/developers/apis/history-api/#get_relative_account_historyaccount-stop-0-limit-100-start-0)
 - [x] [get_account_history_operations](https://echo-dev.io/developers/apis/history-api/#get_account_history_operations-account-operation_id-start-stop-limit-100)
 - [x] [get_contract_history](https://echo-dev.io/developers/apis/history-api/#get_contract_history-account-stop-limit-start)
 
-#### [Network broadcast API](https://echo-dev.io/developers/apis/network-broadcast-api/#network-broadcast-api)
+### Network broadcast API
 
 - [ ] [broadcast_transaction](https://echo-dev.io/developers/apis/network-broadcast-api/#broadcast_transactionsigned_transaction)
 - [ ] [broadcast_transaction_with_callback](https://echo-dev.io/developers/apis/network-broadcast-api/#broadcast_transaction_with_callbackcallback-trx)
 - [ ] [broadcast_transaction_synchronous ](https://echo-dev.io/developers/apis/network-broadcast-api/#broadcast_transaction_synchronous-trx)
 
-#### [Registration API](https://echo-dev.io/developers/apis/registration-api/#registration-api)
+### Registration API
 
 - [x] [register_account](https://echo-dev.io/developers/apis/registration-api/#register_accountname-owner_key-active_key-memo_key-echorand_key)
 
-### Operations:
+## Echo Operations:
 
-#### [List of Account Management Operations](https://echo-dev.io/developers/operations/#account-management)
+### List of Account Management Operations
 
 - [ ] [account_create_operation](https://echo-dev.io/developers/operations/account_management/_account_create_operation/)
 - [ ] [account_update_operation](https://echo-dev.io/developers/operations/account_management/_account_update_operation/)
@@ -147,11 +169,11 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [ ] [account_upgrade_operation](https://echo-dev.io/developers/operations/account_management/_account_upgrade_operation/)
 - [ ] [account_transfer_operation](https://echo-dev.io/developers/operations/account_management/_account_transfer_operation/)
     
-#### [List of Assert Conditions Operations](https://echo-dev.io/developers/operations/#assert-conditions)
+### List of Assert Conditions Operations
 
 - [ ] [assert_operation](https://echo-dev.io/developers/operations/assert_conditions/_assert_operation/)
     
-#### [List of Asset Management Operations](https://echo-dev.io/developers/operations/#asset-management)
+### List of Asset Management Operations
 
 - [ ] [asset_create_operation](https://echo-dev.io/developers/operations/asset_management/_asset_create_operation/)
 - [ ] [asset_global_settle_operation](https://echo-dev.io/developers/operations/asset_management/_asset_global_settle_operation/)
@@ -166,27 +188,27 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [ ] [asset_reserve_operation](https://echo-dev.io/developers/operations/asset_management/_asset_reserve_operation/)
 - [ ] [asset_claim_fees_operation](https://echo-dev.io/developers/operations/asset_management/_asset_claim_fees_operation/)
     
-#### [List of Balance Object Operations](https://echo-dev.io/developers/operations/#balance-object)
+### List of Balance Object Operations
 
 - [ ] [balance_claim_operation](https://echo-dev.io/developers/operations/balance_object/_balance_claim_operation/)
 
-#### [List of For Committee Members Operations](https://echo-dev.io/developers/operations/#for-committee-members)
+### List of For Committee Members Operations
 
 - [ ] [committee_member_create_operation](https://echo-dev.io/developers/operations/committee_member/_committee_member_create_operation/)
 - [ ] [committee_member_update_operation](https://echo-dev.io/developers/operations/committee_member/_committee_member_update_operation/)
 - [ ] [committee_member_update_global_parameters_operation](https://echo-dev.io/developers/operations/committee_member/_committee_member_update_global_parameters_operation/)
     
-#### [List of Contract Operations](https://echo-dev.io/developers/operations/#contract-operations)
+### List of Contract Operations
 
 - [ ] [contract_create_operation](https://echo-dev.io/developers/operations/contracts/_create_contract_operation/)
 - [ ] [contract_call_operation](https://echo-dev.io/developers/operations/contracts/_call_contract_operation/)
 - [ ] [contract_transfer_operation [VIRTUAL]](https://echo-dev.io/developers/operations/contracts/_contract_transfer_operation/)
     
-#### [List of Custom Extension Operations](https://echo-dev.io/developers/operations/#custom-extension)
+### List of Custom Extension Operations
 
 - [ ] [custom_operation](https://echo-dev.io/developers/operations/custom/_custom_operation/)
 
-#### [List of Assets Market Operations](https://echo-dev.io/developers/operations/#assets-market)
+### List of Assets Market Operations
 
 - [ ] [limit_order_create_operation](https://echo-dev.io/developers/operations/asset_market/_limit_order_create_operation/)
 - [ ] [limit_order_cancel_operation](https://echo-dev.io/developers/operations/asset_market/_limit_order_cancel_operation/)
@@ -195,23 +217,23 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [ ] [bid_collateral_operation](https://echo-dev.io/developers/operations/asset_market/_bid_collateral_operation/)
 - [ ] [execute_bid_operation [VIRTUAL]](https://echo-dev.io/developers/operations/asset_market/_execute_bid_operation/)
 
-#### [List of Proposal Operations](https://echo-dev.io/developers/operations/#proposal-operations)
+### List of Proposal Operations
 
 - [ ] [proposal_create_operation](https://echo-dev.io/developers/operations/proposals/_proposal_create_operation/)
 - [ ] [proposal_update_operation](https://echo-dev.io/developers/operations/proposals/_proposal_update_operation/)
 - [ ] [proposal_delete_operation](https://echo-dev.io/developers/operations/proposals/_proposal_delete_operation/)
 
-#### [List of Asset Transfer Operations](https://echo-dev.io/developers/operations/#asset-transfer)
+### List of Asset Transfer Operations
 
 - [ ] [transfer_operation](https://echo-dev.io/developers/operations/asset_transfer/_transfer_operation/)
 - [ ] [override_transfer_operation](https://echo-dev.io/developers/operations/asset_transfer/_override_transfer_operation/)
     
-#### [List of Vesting Balances Operations](https://echo-dev.io/developers/operations/#vesting-balances)
+### List of Vesting Balances Operations
 
 - [ ] [vesting_balance_create_operation](https://echo-dev.io/developers/operations/vesting_balances/_vesting_balance_create_operation/)
 - [ ] [vesting_balance_withdraw_operation](https://echo-dev.io/developers/operations/vesting_balances/_vesting_balance_withdraw_operation/)
     
-#### [List of Withdrawal Permissions Operations](https://echo-dev.io/developers/operations/#withdrawal-permissions)
+### [List of Withdrawal Permissions Operations
 
 - [ ] [withdraw_permission_create_operation](https://echo-dev.io/developers/operations/withdraw_permission/_withdraw_permission_create_operation/)
 - [ ] [withdraw_permission_update_operation](https://echo-dev.io/developers/operations/withdraw_permission/_withdraw_permission_update_operation/)
