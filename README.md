@@ -125,30 +125,30 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 └── test_runner.py
 ```
 
-## Echo Node API:
+# Echo Node API:
 
-### Login API
+## Login API
 
 - [x] [login](https://docs.echo.org/api-reference/echo-node-api/login-api#login-user-password)
 
-### Asset API
+## Asset API
 
 - [x] [get_asset_holders](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_asset_holders-string-asset_id-int-start-int-limit)
 - [x] [get_asset_holders_count](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_asset_holders_count-string-asset_id)
 - [x] [get_all_asset_holders](https://docs.echo.org/api-reference/echo-node-api/asset-api#get_all_asset_holders)
 
-### Database API
+## Database API
 
-#### <u>Objects
+#### Objects
 - [ ] [get_objects](https://docs.echo.org/api-reference/echo-node-api/database-api#get_objects-ids)
 
-#### <u>Subscriptions</u>
+#### Subscriptions
 - [x] [set_subscribe_callback](https://docs.echo.org/api-reference/echo-node-api/database-api#set_subscribe_callback-callback-clear_filter)
 - [x] [set_pending_transaction_callback](https://docs.echo.org/api-reference/echo-node-api/database-api#set_pending_transaction_callback-callback)
 - [x] [set_block_applied_callback ](https://docs.echo.org/api-reference/echo-node-api/database-api#set_block_applied_callback-callback)
 - [ ] [cancel_all_subscriptions](https://docs.echo.org/api-reference/echo-node-api/database-api#cancel_all_subscriptions)
 
-#### <u>Blocks and transactions</u>
+#### Blocks and transactions
 - [x] [get_block_header](https://docs.echo.org/api-reference/echo-node-api/database-api#get_block_header-block_num)
 - [ ] [get_block_header_batch](https://docs.echo.org/api-reference/echo-node-api/database-api#get_block_header_batch-block_nums)
 - [x] [get_block](https://docs.echo.org/api-reference/echo-node-api/database-api#get_block-block_num)
@@ -157,18 +157,18 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] [get_transaction](https://docs.echo.org/api-reference/echo-node-api/database-api#get_transaction-block_num-trx_in_block)
 - [x] [get_recent_transaction_by_id](https://docs.echo.org/api-reference/echo-node-api/database-api#get_recent_transaction_by_id-id)
 
-#### <u>Globals</u>
+#### Globals
 - [x] [get_chain_properties](https://docs.echo.org/api-reference/echo-node-api/database-api#get_chain_properties)
 - [x] [get_global_properties](https://docs.echo.org/api-reference/echo-node-api/database-api#get_global_properties)
 - [x] [get_config](https://docs.echo.org/api-reference/echo-node-api/database-api#get_config)
 - [x] [get_chain_id](https://docs.echo.org/api-reference/echo-node-api/database-api#get_chain_id)
 - [x] [get_dynamic_global_properties](https://docs.echo.org/api-reference/echo-node-api/database-api#get_dynamic_global_properties)
 
-#### <u>Keys</u>
+#### Keys
 - [x] [get_key_references](https://docs.echo.org/api-reference/echo-node-api/database-api#get_key_references-keys)
 - [ ] [is_public_key_registered](https://docs.echo.org/api-reference/echo-node-api/database-api#is_public_key_registered-public_key)
 
-#### <u>Accounts</u>
+#### Accounts
 - [x] [get_accounts](https://docs.echo.org/api-reference/echo-node-api/database-api#get_accounts-account_ids)
 - [x] [get_full_accounts](https://docs.echo.org/api-reference/echo-node-api/database-api#get_full_accounts-names_or_ids-subscribe)
 - [x] [get_account_by_name](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_by_name-name)
@@ -179,7 +179,7 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] [get_account_addresses](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_addresses-account_id-from-limit)
 - [x] [get_account_by_address](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_by_address-address)
 
-#### <u>Contracts</u>
+#### Contracts++
 - [x] [get_contract](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract-contract_id)
 - [x] [get_contracts](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contracts-contract_ids)
 - [x] [get_contract_logs](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract_logs-contract_id-from-to)
@@ -188,7 +188,7 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] [get_contract_result](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract_result-id)
 - [x] [call_contract_no_changing_state](https://docs.echo.org/api-reference/echo-node-api/database-api#call_contract_no_changing_state-contract_id-registrar_account-asset_type-code)
 
-#### <u>Balances</u>
+#### Balances
 - [x] [get_account_balances](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_balances-id-assets)
 - [x] [get_contract_balances](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract_balances-contract_id)
 - [x] [get_named_account_balances](https://docs.echo.org/api-reference/echo-node-api/database-api#get_named_account_balances-name-assets)
@@ -196,24 +196,24 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] [get_vested_balances](https://docs.echo.org/api-reference/echo-node-api/database-api#get_vested_balances-objs)
 - [x] [get_vesting_balances](https://docs.echo.org/api-reference/echo-node-api/database-api#get_vesting_balances-account_id)
 
-#### <u>Assets</u>
+#### Assets
 - [x] [get_assets](https://docs.echo.org/api-reference/echo-node-api/database-api#get_assets-asset_ids)
 - [x] [list_assets](https://docs.echo.org/api-reference/echo-node-api/database-api#list_assets-lower_bound_symbol-limit)
 - [x] [lookup_asset_symbols](https://docs.echo.org/api-reference/echo-node-api/database-api#lookup_asset_symbols-symbols_or_ids)
 
-#### <u>Verifiers</u>
+#### Verifiers
 - [ ] [get_current_verifiers](https://docs.echo.org/api-reference/echo-node-api/database-api#get_current_verifiers-stage_num)
 
-#### <u>Committee members</u>
+#### Committee members
 - [x] [get_committee_members](https://docs.echo.org/api-reference/echo-node-api/database-api#get_committee_members-committee_member_ids)
 - [x] [get_committee_member_by_account](https://docs.echo.org/api-reference/echo-node-api/database-api#get_committee_member_by_account-account)
 - [x] [lookup_committee_member_accounts](https://docs.echo.org/api-reference/echo-node-api/database-api#lookup_committee_member_accounts-lower_bound_name-limit)
 - [x] [get_committee_count](https://docs.echo.org/api-reference/echo-node-api/database-api#get_committee_count)
 
-#### <u>Votes
+#### Votes
 - [x] [lookup_vote_ids](https://docs.echo.org/api-reference/echo-node-api/database-api#lookup_vote_ids-votes)
 
-#### <u>Authority / validation
+#### Authority / validation
 - [x] [get_transaction_hex](https://docs.echo.org/api-reference/echo-node-api/database-api#get_transaction_hex-trx)
 - [ ] [get_required_signatures](https://docs.echo.org/api-reference/echo-node-api/database-api#get_required_signatures-ctrx-available_keys)
 - [x] [get_potential_signatures](https://docs.echo.org/api-reference/echo-node-api/database-api#get_potential_signatures-ctrx)
@@ -222,42 +222,42 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [x] [validate_transaction](https://docs.echo.org/api-reference/echo-node-api/database-api#validate_transaction-trx)
 - [x] [get_required_fees](https://docs.echo.org/api-reference/echo-node-api/database-api#get_required_fees-ops-id)
 
-#### <u>Proposed transactions</u>
+#### Proposed transactions
 - [ ] [get_proposed_transactions](https://docs.echo.org/api-reference/echo-node-api/database-api#get_proposed_transactions-id)
 
-#### <u>Sidechain</u>
+#### Sidechain
 - [x] [get_eth_address](https://docs.echo.org/api-reference/echo-node-api/database-api#get_eth_address-account)
 - [x] [get_account_deposits](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_deposits-account)
 - [x] [get_account_withdrawals](https://docs.echo.org/api-reference/echo-node-api/database-api#get_account_withdrawals-account)
 
-#### <u>Sidechain ERC20</u>
+#### Sidechain ERC20
 - [x] [get_erc20_token](https://docs.echo.org/api-reference/echo-node-api/database-api#get_erc-20-_token-eth_addr)
 - [x] check_erc20_token
 - [x] [get_erc20_account_deposits](https://docs.echo.org/api-reference/echo-node-api/database-api#get_erc-20-_account_deposits-account)
 - [x] [get_erc20_account_withdrawals](https://docs.echo.org/api-reference/echo-node-api/database-api#get_erc-20-_account_withdrawals-account)
 
-#### <u>Contract Feepool</u>
+#### Contract Feepool
 - [x] [get_contract_pool_balance](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract_pool_balance-id)
 - [x] [get_contract_pool_whitelist](https://docs.echo.org/api-reference/echo-node-api/database-api#get_contract_pool_whitelist-id)
 
-### History API
+## History API
 
 - [x] [get_account_history](https://docs.echo.org/api-reference/echo-node-api/history-api#get_account_history-account-stop-limit-100-start)
 - [x] [get_relative_account_history](https://docs.echo.org/api-reference/echo-node-api/history-api#get_relative_account_history-account-stop-0-limit-100-start-0)
 - [x] [get_account_history_operations](https://docs.echo.org/api-reference/echo-node-api/history-api#get_account_history_operations-account-operation_id-start-stop-limit-100)
 - [x] [get_contract_history](https://docs.echo.org/api-reference/echo-node-api/history-api#get_contract_history-contract-stop-limit-start)
 
-### Network broadcast API
+## Network broadcast API
 
 - [ ] [broadcast_transaction](https://docs.echo.org/api-reference/echo-node-api/network-broadcast-api#broadcast_transaction-signed_transaction)
 - [ ] [broadcast_transaction_with_callback](https://docs.echo.org/api-reference/echo-node-api/network-broadcast-api#broadcast_transaction_with_callback-callback-trx)
 - [ ] [broadcast_transaction_synchronous ](https://docs.echo.org/api-reference/echo-node-api/network-broadcast-api#broadcast_transaction_synchronous-trx)
 
-### Registration API
+## Registration API
 
 - [x] [register_account](https://docs.echo.org/api-reference/echo-node-api/registration-api#register_account-name-active_key-echorand_key)
 
-## Echo Operations:
+# Echo Operations:
 
 ### Account Management
 
