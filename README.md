@@ -188,6 +188,7 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 - [ ] [account_update_operation](https://docs.echo.org/api-reference/echo-operations/account-management#account_update_operation)
 - [ ] [account_whitelist_operation](https://docs.echo.org/api-reference/echo-operations/account-management#account_whitelist_operation)
 - [ ] [account_transfer_operation](https://docs.echo.org/api-reference/echo-operations/account-management#account_transfer_operation)
+- [ ] [account_address_create_operation](https://docs.echo.org/api-reference/echo-operations/account-management#account_address_create_operation)
     
 ### Asset Management
 
@@ -241,12 +242,13 @@ _note:_ can combine run options, for example - `$ lcc run --failed --from-report
 
 - [ ] [sidechain_eth_create_address_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_create_address_operation)
 - [ ] [sidechain_eth_approve_address_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_approve_address_operation)
-- [ ] [sidechain_eth_deposit](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_deposit)
-- [ ] [sidechain_eth_withdraw](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_withdraw)
-- [ ] [sidechain_eth_approve_withdraw](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_approve_withdraw)
-- [ ] [sidechain_eth_issue [VIRTUAL]](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_issue)
-- [ ] [sidechain_eth_burn [VIRTUAL]](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_burn)
-- [ ] [sidechain_erc20_register_token](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_register_token)
-- [ ] [sidechain_erc20_deposit_token](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_deposit_token)
-- [ ] [sidechain_erc20_withdraw_token](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_withdraw_token)
-- [ ] [sidechain_erc20_approve_token_withdraw](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_approve_token_withdraw)
+- [ ] [sidechain_eth_deposit_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_deposi_operationt)
+- [ ] [sidechain_eth_withdraw_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_withdraw_operation)
+- [ ] [sidechain_eth_approve_withdraw_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_approve_withdraw_operation)
+- [ ] [sidechain_eth_issue_operation [VIRTUAL]](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_issue_operation)
+- [ ] [sidechain_eth_burn_operation [VIRTUAL]](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_eth_burn_operation)
+- [ ] [sidechain_erc20_register_token_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_register_token_operation)
+- [ ] [sidechain_erc20_deposit_token_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_deposit_token_operation)
+- [ ] [sidechain_erc20_withdraw_token_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_withdraw_token_operation)
+- [ ] [sidechain_erc20_approve_token_withdraw_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_erc20_approve_token_withdraw_operation)
+- [ ] [sidechain_change_config_operation](https://docs.echo.org/api-reference/echo-operations/sidechain#sidechain_change_config_operation)
