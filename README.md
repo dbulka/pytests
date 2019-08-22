@@ -35,11 +35,11 @@ The project is intended for testing Echo. Includes testing:
 - *ROPSTEN* - flag to run tests in the ropsten network (bool type)
 - *DEBUG* - run tests with debug mode that log all in\out communication messages with Echo node (bool type)
 
-##### For this you need, example:
+##### for this you need, example:
 * Linux OS: export BASE_URL=_[needed_url]()_
 * Windows OS: set BASE_URL=_[needed_url]()_
 
-### Run docker to use Echo and Ethereum nodes locally:
+### You can docker to run tests on the Echo and Ethereum nodes locally:
     $ cd pytests
     $ docker-compose pull
     $ docker-compose up build --no-cache
@@ -63,6 +63,68 @@ Run only enabled tests           | `$ lcc run --enabled`
 Run tests from special report    | `$ lcc run --from-report path_to_report`
 
 _note:_ can combine run options, for example - `$ lcc run --failed --from-report reports/report-2`
+
+## Project tree:
+```
+├── common
+│   ├── base_test.py
+│   ├── echo_operation.py
+│   ├── ethereum_transaction.py
+│   ├── receiver.py
+│   ├── utils.py
+│   └── validation.py
+├── fixtures
+│   └── base_fixtures.py
+├── pre_run_scripts
+│   └── pre_deploy.py
+├── resources
+│   ├── echo_contracts.json
+│   ├── echo_operations.json
+│   ├── ethereum_contracts.json
+│   ├── ethereum_transactions.json
+│   ├── private_keys.json (optional)
+│   ├── urls.json
+│   └── wallets.json (optional)
+├── suites
+│   ├── AssetApi
+│   │   ├── GetAllAssetHolders.py
+│   │   ├── GetAssetHolders.py
+│   │   └── ...
+│   ├── DatabaseApi
+│   │   ├── CallContractNoChangingState.py
+│   │   ├── CheckERC20Token.py
+│   │   └── ...
+│   ├── HistoryApi
+│   │   ├── GetAccountHistory.py
+│   │   ├── GetAccountHistoryOperations.py
+│   │   └── ...
+│   ├── Scenarios
+│   │   ├── AssetInt.py
+│   │   ├── BalanceObjectsInSubscribe.py
+│   │   └── ...
+│   ├── SideChain
+│   │   ├── ERC20.py
+│   │   └── Ethereum.py
+│   ├── AssetApi.py
+│   ├── DatabaseApi.py
+│   ├── HistoryApi.py
+│   ├── LoginApi.py
+│   ├── NetworkBroadcastApi.py
+│   ├── RegistrationApi.py
+│   ├── Scenarios.py
+│   └── SideChain.py
+├── .env
+├── .flake8
+├── .gitignore
+├── .gitlab-ci.yml
+├── docker-compose.yml
+├── Dockerfile
+├── genesis.json
+├── project.py
+├── README.md
+├── requirements.txt
+└── test_runner.py
+```
 
 ## Echo Node API:
 
