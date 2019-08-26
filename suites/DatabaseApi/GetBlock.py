@@ -80,7 +80,7 @@ class GetBlock(BaseTest):
                 "_signer", is_integer(),
                 "_delegate", is_integer(),
                 "_fallback", is_integer(),
-                quiet=False
+                quiet=True
             )
 
 

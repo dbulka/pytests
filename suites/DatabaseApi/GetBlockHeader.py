@@ -33,11 +33,10 @@ class GetBlockHeader(BaseTest):
         block_num = 1
         response_id = self.send_request(self.get_request("get_block_header", [block_num]),
                                         self.__database_api_identifier)
-        response = self.get_response(response_id)
+        block_header = self.get_response(response_id)["result"]
         lcc.log_info("Call method 'get_block_header' with block_num='{}' parameter".format(block_num))
 
         lcc.set_step("Check simple work of method 'get_block_header'")
-        block_header = response["result"]
         require_that(
             "'the block header of the first block'",
             block_header, has_length(9)
