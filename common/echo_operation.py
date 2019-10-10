@@ -153,7 +153,7 @@ class EchoOperations(object):
                                    max_supply="1000000000000000", issuer_permissions=79, flags=0, base_amount=1,
                                    base_asset_id="1.3.0", quote_amount=1, quote_asset_id="1.3.1",
                                    whitelist_authorities=None, blacklist_authorities=None, description="",
-                                   extensions=None, new_options=False, signer=None, debug_mode=False):
+                                   extensions=None, new_issuer=None, new_options=False, signer=None, debug_mode=False):
         if whitelist_authorities is None:
             whitelist_authorities = []
         if blacklist_authorities is None:
@@ -177,9 +177,15 @@ class EchoOperations(object):
                  "description": description})
         else:
             del asset_update_props["new_options"]
+        if new_issuer:
+            asset_update_props.update({"new_issuer": new_issuer})
+        else:
+            del asset_update_props["new_issuer"]
         if debug_mode:
             lcc.log_debug("Update asset operation: \n{}".format(json.dumps(asset_update_props, indent=4)))
-        if signer is None:
+        if signer is None and new_issuer:
+            return [operation_id, asset_update_props, new_issuer]
+        if signer is None and new_issuer is None:
             return [operation_id, asset_update_props, issuer]
         return [operation_id, asset_update_props, signer]
 

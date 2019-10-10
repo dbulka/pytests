@@ -65,8 +65,9 @@ class UpdateAsset(BaseTest):
 
         lcc.set_step("Perform new asset update operation without 'new_options'")
         asset_update_operation = self.echo_ops.get_asset_update_operation(echo=self.echo, issuer=new_account,
+                                                                          new_issuer=self.echo_acc0,
                                                                           asset_to_update=new_asset_id,
-                                                                          new_options=True)
+                                                                          new_options=False)
         self.utils.add_balance_for_operations(self, new_account, asset_create_operation,
                                               self.__database_api_identifier,
                                               operation_count=operation_count)
