@@ -149,6 +149,40 @@ class EchoOperations(object):
             return [operation_id, asset_create_props, issuer]
         return [operation_id, asset_create_props, signer]
 
+    def get_asset_update_operation(self, echo, issuer, asset_to_update, fee_amount=0, fee_asset_id="1.3.0",
+                                   max_supply="1000000000000000", issuer_permissions=79, flags=0, base_amount=1,
+                                   base_asset_id="1.3.0", quote_amount=1, quote_asset_id="1.3.1",
+                                   whitelist_authorities=None, blacklist_authorities=None, description="",
+                                   extensions=None, new_options=False, signer=None, debug_mode=False):
+        if whitelist_authorities is None:
+            whitelist_authorities = []
+        if blacklist_authorities is None:
+            blacklist_authorities = []
+        if extensions is None:
+            extensions = []
+        operation_id = echo.config.operation_ids.ASSET_UPDATE
+        asset_update_props = self.get_operation_json("asset_update_operation")
+        asset_update_props["fee"].update({"amount": fee_amount, "asset_id": fee_asset_id})
+        asset_update_props.update(
+            {"issuer": issuer, "asset_to_update": asset_to_update, "extensions": extensions})
+        if new_options:
+            asset_update_props["new_options"].update(
+                {"max_supply": max_supply, "issuer_permissions": issuer_permissions, "flags": flags})
+            asset_update_props["new_options"]["core_exchange_rate"]["base"].update(
+                {"amount": base_amount, "asset_id": base_asset_id})
+            asset_update_props["new_options"]["core_exchange_rate"]["quote"].update(
+                {"amount": quote_amount, "asset_id": quote_asset_id})
+            asset_update_props["new_options"].update(
+                {"whitelist_authorities": whitelist_authorities, "blacklist_authorities": blacklist_authorities,
+                 "description": description})
+        else:
+            del asset_update_props["new_options"]
+        if debug_mode:
+            lcc.log_debug("Update asset operation: \n{}".format(json.dumps(asset_update_props, indent=4)))
+        if signer is None:
+            return [operation_id, asset_update_props, issuer]
+        return [operation_id, asset_update_props, signer]
+
     def get_asset_issue_operation(self, echo, issuer, value_amount, value_asset_id, issue_to_account, fee_amount=0,
                                   fee_asset_id="1.3.0", extensions=None, signer=None, debug_mode=False):
         if extensions is None:
