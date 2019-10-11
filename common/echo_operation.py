@@ -183,9 +183,7 @@ class EchoOperations(object):
             del asset_update_props["new_issuer"]
         if debug_mode:
             lcc.log_debug("Update asset operation: \n{}".format(json.dumps(asset_update_props, indent=4)))
-        if signer is None and new_issuer:
-            return [operation_id, asset_update_props, new_issuer]
-        if signer is None and new_issuer is None:
+        if signer is None and issuer:
             return [operation_id, asset_update_props, issuer]
         return [operation_id, asset_update_props, signer]
 
