@@ -171,7 +171,7 @@ class EchoOperations(object):
             asset_update_props["new_options"]["core_exchange_rate"]["base"].update(
                 {"amount": base_amount, "asset_id": base_asset_id})
             asset_update_props["new_options"]["core_exchange_rate"]["quote"].update(
-                {"amount": quote_amount, "asset_id": quote_asset_id})
+                {"amount": quote_amount, "asset_id": asset_to_update})
             asset_update_props["new_options"].update(
                 {"whitelist_authorities": whitelist_authorities, "blacklist_authorities": blacklist_authorities,
                  "description": description})
