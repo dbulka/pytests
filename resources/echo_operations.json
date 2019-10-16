@@ -56,11 +56,8 @@
             },
             "echorand_key": "ECHODvHDsAfk2M8LhYcxLZTbrNJRWT3UH5zxdaWimWc6uZkH",
             "new_options": {
-                "voting_account": "1.2.5",
                 "delegating_account": "1.2.0",
                 "delegate_share": 0,
-                "num_committee": 0,
-                "votes": [],
                 "extensions": []
             },
             "extensions": []

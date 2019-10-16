@@ -633,10 +633,7 @@ class Utils(object):
                                                                     account_auths=active["account_auths"],
                                                                     key_auths=active["key_auths"],
                                                                     echorand_key=echorand_key,
-                                                                    voting_account=options["voting_account"],
-                                                                    delegating_account=options["delegating_account"],
-                                                                    num_committee=options["num_committee"],
-                                                                    votes=options["votes"])
+                                                                    delegating_account=options["delegating_account"])
         if account_id != base_test.echo_acc0:
             temp_operation = deepcopy(operation)
             broadcast_result = self.add_balance_for_operations(base_test, account_id, temp_operation, database_api_id,
