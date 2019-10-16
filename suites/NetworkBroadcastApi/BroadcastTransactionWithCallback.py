@@ -100,13 +100,7 @@ class BroadcastTransactionWithCallback(BaseTest):
         params = [subscription_callback_id, False]
         response_id = self.send_request(self.get_request("set_subscribe_callback", params),
                                         self.__database_api_identifier, debug_mode=True)
-        response = self.get_response(response_id, log_response=True)
-
-        lcc.set_step("Get notice about broadcast transaction")
-        notice = self.get_notice(subscription_callback_id)
-
-        lcc.set_step("Check that signed transaction in notice")
-        check_that("transaction", signed_tx, equal_to(self.get_trx_without_sign_info_from_notice(notice)), quiet=True)
+        self.get_response(response_id, log_response=True)
 
         lcc.set_step("Get account balance after transfer transaction broadcast")
         response_id = self.send_request(self.get_request("get_account_balances", [self.echo_acc1, [self.echo_asset]]),

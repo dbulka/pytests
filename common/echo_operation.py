@@ -149,8 +149,7 @@ class EchoOperations(object):
             return [operation_id, asset_create_props, issuer]
         return [operation_id, asset_create_props, signer]
 
-<<<<<<< Updated upstream
-=======
+
     def get_asset_update_operation(self, echo, issuer, asset_to_update, fee_amount=0, fee_asset_id="1.3.0",
                                    max_supply="1000000000000000", issuer_permissions=79, flags=0, base_amount=1,
                                    base_asset_id="1.3.0", quote_amount=1, quote_asset_id="1.3.1",
@@ -229,7 +228,7 @@ class EchoOperations(object):
             return [operation_id, asset_update_feed_producers_props, issuer]
         return [operation_id, asset_update_feed_producers_props, signer]
 
->>>>>>> Stashed changes
+
     def get_asset_issue_operation(self, echo, issuer, value_amount, value_asset_id, issue_to_account, fee_amount=0,
                                   fee_asset_id="1.3.0", extensions=None, signer=None, debug_mode=False):
         if extensions is None:
