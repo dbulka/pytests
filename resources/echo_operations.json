@@ -248,7 +248,7 @@
         }
     ],
     "contract_call_operation": [
-        25,
+        32,
         {
             "fee": {
                 "amount": 0,

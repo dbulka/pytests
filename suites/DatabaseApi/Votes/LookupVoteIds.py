@@ -9,7 +9,8 @@ SUITE = {
     "description": "Method 'lookup_vote_ids'"
 }
 
-
+# todo: method was deleted echo
+@lcc.disabled()
 @lcc.prop("main", "type")
 @lcc.prop("positive", "type")
 @lcc.tags("api", "database_api", "database_api_votes", "lookup_vote_ids")

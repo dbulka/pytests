@@ -309,12 +309,10 @@ class GetGlobalProperties(BaseTest):
                                              self.fee_with_price_per_kbyte)
 
         lcc.set_step("Check 'only_fee' for operations")
-        # todo: uncomment. BUG: node's wrong parsing genesis.json
         check_that("'only_fee' operation count", only_fee_operations, has_length(self.only_fee_count))
         self.check_default_fee_for_operation(fee_parameters, only_fee_operations, self.only_fee)
 
         lcc.set_step("Check 'no_fee' for operations")
-        # todo: uncomment. BUG: node's wrong parsing genesis.json
         check_that("'no_fee' operation count", no_fee_operations, has_length(self.no_fee_count))
         self.check_default_fee_for_operation(fee_parameters, no_fee_operations, self.no_fee)
 
