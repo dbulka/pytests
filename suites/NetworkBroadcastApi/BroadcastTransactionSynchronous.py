@@ -10,10 +10,9 @@ SUITE = {
 }
 
 
-@lcc.prop("suite_run_option_1", "main")
-@lcc.prop("suite_run_option_2", "positive")
-@lcc.prop("suite_run_option_3", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction_synchronous")
+@lcc.prop("main", "type")
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction_synchronous")
 @lcc.suite("Check work of method 'broadcast_transaction_synchronous'", rank=1)
 class BroadcastTransactionSynchronous(BaseTest):
 
@@ -89,9 +88,9 @@ class BroadcastTransactionSynchronous(BaseTest):
                    (account_balance + transfer_amount) == updated_account_balance, is_true(), quiet=True)
 
 
-@lcc.prop("suite_run_option_3", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction_synchronous")
-@lcc.suite("Negative testing of method 'broadcast_transaction_synchronous'", rank=2)
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction_synchronous")
+@lcc.suite("Negative testing of method 'broadcast_transaction_synchronous'", rank=3)
 class NegativeTesting(BaseTest):
 
     def __init__(self):

@@ -9,10 +9,9 @@ SUITE = {
 }
 
 
-@lcc.prop("testing", "main")
-@lcc.prop("testing", "positive")
-@lcc.prop("testing", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction")
+@lcc.prop("main", "type")
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction")
 @lcc.suite("Check work of method 'broadcast_transaction'", rank=1)
 class BroadcastTransaction(BaseTest):
 
@@ -88,9 +87,9 @@ class BroadcastTransaction(BaseTest):
                    (account_balance + transfer_amount) == updated_account_balance, is_true(), quiet=True)
 
 
-@lcc.prop("suite_run_option_3", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction")
-@lcc.suite("Negative testing of method 'broadcast_transaction'", rank=2)
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction")
+@lcc.suite("Negative testing of method 'broadcast_transaction'", rank=3)
 class NegativeTesting(BaseTest):
 
     def __init__(self):

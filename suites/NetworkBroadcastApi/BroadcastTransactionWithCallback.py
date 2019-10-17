@@ -11,10 +11,9 @@ SUITE = {
 }
 
 
-@lcc.prop("suite_run_option_1", "main")
-@lcc.prop("suite_run_option_2", "positive")
-@lcc.prop("suite_run_option_3", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction_with_callback")
+@lcc.prop("main", "type")
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction_with_callback")
 @lcc.suite("Check work of method 'broadcast_transaction_with_callback'", rank=1)
 class BroadcastTransactionWithCallback(BaseTest):
 
@@ -107,9 +106,9 @@ class BroadcastTransactionWithCallback(BaseTest):
                    quiet=True)
 
 
-@lcc.prop("suite_run_option_3", "negative")
-@lcc.tags("network_broadcast_api", "broadcast_transaction_with_callback")
-@lcc.suite("Negative testing of method 'broadcast_transaction_with_callback'", rank=2)
+@lcc.prop("negative", "type")
+@lcc.tags("api", "network_broadcast_api", "broadcast_transaction_with_callback")
+@lcc.suite("Negative testing of method 'broadcast_transaction_with_callback'", rank=3)
 class NegativeTesting(BaseTest):
 
     def __init__(self):
