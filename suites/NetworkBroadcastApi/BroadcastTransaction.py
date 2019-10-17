@@ -145,9 +145,9 @@ class NegativeTesting(BaseTest):
     def check_broadcast_transaction_with_callback_with_wrong_signature(self, get_random_integer_up_to_ten):
         transfer_amount = get_random_integer_up_to_ten
         expected_message = "irrelevant signature included: Unnecessary signature(s) detected"
-        transfer_operation = self.echo_ops.get_transfer_operation(echo=self.echo, from_account_id=self.echo_acc0,
-                                                                  amount=transfer_amount, to_account_id=self.echo_acc1,
-                                                                  signer=self.echo_acc1)
+        transfer_operation = self.echo_ops.get_transfer_operation(echo=self.echo, from_account_id=self.echo_acc1,
+                                                                  amount=transfer_amount, to_account_id=self.echo_acc0,
+                                                                  signer=self.echo_acc0)
         collected_operation = self.collect_operations(transfer_operation, self.__database_api_identifier)
 
         lcc.set_step("Broadcast transfer transaction to get error message")
