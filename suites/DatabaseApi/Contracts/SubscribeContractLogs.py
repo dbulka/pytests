@@ -56,7 +56,7 @@ class SubscribeContractLogs(BaseTest):
                                                  value_amount=value_amount)
 
         lcc.set_step("Subscribe to created contract")
-        params = [subscription_callback_id, contract_id]
+        params = [subscription_callback_id, [[contract_id, []]]]
         response_id = self.send_request(self.get_request("subscribe_contract_logs", params),
                                         self.__database_api_identifier)
         response = self.get_response(response_id)
@@ -73,6 +73,7 @@ class SubscribeContractLogs(BaseTest):
 
         lcc.set_step("Get notices about updates of created contract")
         contract_logs_notice = self.get_notice(subscription_callback_id, debug_mode=True)["params"][1][0]
+        lcc.log_debug(str(contract_logs_notice))
 
         lcc.set_step("Check subscribe contracts log")
         for log in contract_logs_notice:
@@ -110,7 +111,7 @@ class PositiveTesting(BaseTest):
         self.set_all_values = self.get_byte_code("dynamic_fields", self.setAllValues_method_name)
 
     def subscribe_contract_logs(self, callback, contract_id):
-        params = [callback, contract_id]
+        params = [callback, {contract_id: []}]
         response_id = self.send_request(self.get_request("subscribe_contract_logs", params),
                                         self.__database_api_identifier)
         response = self.get_response(response_id)
