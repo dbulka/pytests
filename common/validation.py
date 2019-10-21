@@ -62,7 +62,7 @@ class Validator(object):
     @staticmethod
     def is_string(value):
         if not isinstance(value, str):
-            raise ValueError("Value is not string")
+            return False
         return True
 
     @staticmethod
