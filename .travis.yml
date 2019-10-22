@@ -3,7 +3,7 @@ node_js:
   - "10"
 
 env:
-  MIGRATION_RESULT: ""
+  - MIGRATION_RESULT: ""
 
 stages:
   - test
@@ -14,9 +14,6 @@ jobs:
       name: "Run test"
       services:
         - docker
-      if: type = pull_request
-      before_install:
-#        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
       script:
         - docker-compose down -v
         - docker-compose pull
@@ -30,3 +27,6 @@ jobs:
       before_install:
         - docker-compose down -v
         - docker-compose rm -fv
+      branches:
+        only:
+          - ECHOT-231
