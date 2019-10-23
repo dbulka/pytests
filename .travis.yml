@@ -3,8 +3,11 @@ python:
   - "3.7"
 cache: pip
 env:
-  - PYTESTS_FILTERS: connection_to_apis
-  - MIGRATION_RESULT: ""
+  global:
+    - NATHAN_PK: 5JkYKpRDWeY3DN4qjZRKpEfxCqmTX17fsBJhupE9DJVVmJoGh6C
+    - INIT0_PK: 5J6azg8iUcQEbxEaLAFrJbcdBjgKqewLF81A63NE4T2aeHCsKiE
+    - PYTESTS_FILTERS: connection_to_apis
+    - MIGRATION_RESULT: ""
 install:  pip3 install -r requirements.txt
 services:
   - docker
