@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import lemoncheesecake.api as lcc
-from lemoncheesecake.matching import check_that, equal_to
+from lemoncheesecake.matching import check_that, equal_to, has_length
 
 from common.base_test import BaseTest
 from fixtures.base_fixtures import get_random_integer, get_random_integer_up_to_hundred
@@ -73,10 +73,8 @@ class GetBlockTxNumber(BaseTest):
                                                                       to_account_id=self.echo_acc1, amount=i + 1)
             collected_operation = self.collect_operations(transfer_operation, self.__database_api_identifier)
             signed_trx.append(self.echo_ops.broadcast(echo=self.echo, list_operations=collected_operation,
-                                                      no_broadcast=True, broadcast_with_callback=True))
-        lcc.log_info("{} transactions have been prepared".format(trx_to_broadcast))
-
-        lcc.log_debug(str(signed_trx))
+                                                      no_broadcast=True))
+        lcc.log_info("{} transactions prepared".format(trx_to_broadcast))
 
         lcc.set_step("Broadcast transaction to the next block")
         current_block = self.get_head_block_num()
@@ -87,18 +85,22 @@ class GetBlockTxNumber(BaseTest):
                     params = [subscription_callback_id, signed_tx]
                     response_id = self.send_request(self.get_request("broadcast_transaction_with_callback", params),
                                                     self.__network_broadcast_identifier)
-                    self.get_response(response_id, log_response=True)
+                    self.get_response(response_id)
                 break
-        lcc.log_info("Transactions have been broadcasted")
+        lcc.log_info("Transactions broadcasted")
 
         lcc.set_step("Get block id and check that all {} transactions added successfully".format(trx_to_broadcast))
-        notice = self.get_notice(subscription_callback_id)
+        notice = self.get_notice(subscription_callback_id, log_response=False)
         block_num = notice["block_num"]
-        # self.set_timeout_wait(5)
+        self.utils.set_timeout_until_num_blocks_released(self, self.__database_api_identifier)
+        response_id = self.send_request(self.get_request("get_block", [block_num]), self.__database_api_identifier)
+        transactions = self.get_response(response_id)["result"]["transactions"]
+        check_that("transactions in block number", transactions, has_length(trx_to_broadcast))
+
+        lcc.set_step("Check 'get_block_tx_number' response")
         response_id = self.send_request(self.get_request("get_block_header", [block_num + 1]),
                                         self.__database_api_identifier)
-        result = self.get_response(response_id)["result"]
-        block_id = result["previous"]
+        block_id = self.get_response(response_id)["result"]["previous"]
         response_id = self.send_request(self.get_request("get_block_tx_number", [block_id]),
                                         self.__database_api_identifier)
         result = self.get_response(response_id)["result"]
