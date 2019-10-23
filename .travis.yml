@@ -12,6 +12,7 @@ jobs:
   include:
     - stage: test
       name: "Run test"
+      if: type = pull_request
       services:
         - docker
       script:
@@ -27,6 +28,3 @@ jobs:
       before_install:
         - docker-compose down -v
         - docker-compose rm -fv
-      branches:
-        only:
-          - ECHOT-231
