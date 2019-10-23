@@ -8,8 +8,6 @@ SUITE = {
     "description": "Pass asset parameter to solidity, asset integer type"
 }
 
-# todo: undisabled, when blockchain dev'll send new contract
-@lcc.disabled()
 @lcc.prop("main", "type")
 @lcc.tags("scenarios", "asset_int")
 @lcc.suite("Check scenario 'Parameter asset is integer type'")
