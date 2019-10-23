@@ -549,13 +549,12 @@ class Utils(object):
         operation = base_test.echo_ops.get_contract_fund_pool_operation(echo=base_test.echo, sender=sender,
                                                                         contract=contract, value_amount=value_amount,
                                                                         value_asset_id=value_asset_id)
-        # todo: uncomment if fee != 0
-        # if sender != base_test.echo_acc0:
-        #     temp_operation = deepcopy(operation)
-        #     broadcast_result = self.add_balance_for_operations(base_test, sender, temp_operation, database_api_id,
-        #                                                        log_broadcast=log_broadcast)
-        #     if not base_test.is_operation_completed(broadcast_result, expected_static_variant=0):
-        #         raise Exception("Error: can't add balance to new account, response:\n{}".format(broadcast_result))
+        if sender != base_test.echo_acc0:
+            temp_operation = deepcopy(operation)
+            broadcast_result = self.add_balance_for_operations(base_test, sender, temp_operation, database_api_id,
+                                                               log_broadcast=log_broadcast)
+            if not base_test.is_operation_completed(broadcast_result, expected_static_variant=0):
+                raise Exception("Error: can't add balance to new account, response:\n{}".format(broadcast_result))
         collected_operation = base_test.collect_operations(operation, database_api_id)
         broadcast_result = base_test.echo_ops.broadcast(echo=base_test.echo, list_operations=collected_operation,
                                                         log_broadcast=log_broadcast)
