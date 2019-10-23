@@ -4,7 +4,7 @@ services:
 
   ganache:
     image: trufflesuite/ganache-cli:latest
-    container_name: '631.echo.ganache.${ENV}'
+    container_name: '631.echo.ganache.'
     entrypoint:
       - node
       - /app/ganache-core.docker.cli.js
@@ -27,7 +27,7 @@ services:
 
   migrate:
     image: echoprotocol/sidechain-smartcontracts:0.8.3
-    container_name: '631.echo.contracts.${ENV}'
+    container_name: '631.echo.contracts.'
     command: /bin/sh -c "sleep 5; npm run migrate -- --network docker;"
     depends_on:
       - ganache
@@ -35,23 +35,9 @@ services:
       - ./genesis.json:/app/genesis.json
 
 
-  # pytests:
-  #   environment:
-  #     - DEBUG=False
-  #     - BASE_URL=ws://echo:6311/ws
-  #     - ETHEREUM_URL=http://ganache:8545
-  #     - NATHAN_PK=5JkYKpRDWeY3DN4qjZRKpEfxCqmTX17fsBJhupE9DJVVmJoGh6C
-  #     - INIT0_PK=5J6azg8iUcQEbxEaLAFrJbcdBjgKqewLF81A63NE4T2aeHCsKiE
-  #   build: .
-  #   command: ["python3", "test_runner.py"]
-  #   container_name: '631.echo.pytests.${ENV}'
-  #   depends_on:
-  #     - echo
-
-
   echo:
     image: echoprotocol/echo:0.11.1-rc.2
-    container_name: '631.echo.node.${ENV}'
+    container_name: '631.echo.node.'
     hostname: 'echo'
     command: '--data-dir=/echo/datadir/
       --genesis-json=/echo/genesis.json
