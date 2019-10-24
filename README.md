@@ -177,7 +177,7 @@ Contract Feepool:
 #### [Registration API](https://echo-dev.io/developers/apis/registration-api/#registration-api)
 
 - [x] [register_account](https://echo-dev.io/developers/apis/registration-api/#register_accountname-owner_key-active_key-memo_key-echorand_key)
-- [ ] [request_registration_task](https://echo-dev.io/developers/apis/registration-api/#request_registration_task)
+- [x] [request_registration_task](https://echo-dev.io/developers/apis/registration-api/#request_registration_task)
 - [ ] [register_account](https://echo-dev.io/developers/apis/registration-api/#submit_registration_solution)
 - [ ] [register_account](https://echo-dev.io/developers/apis/registration-api/#get_registrar)
 
