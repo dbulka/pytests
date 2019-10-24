@@ -3,16 +3,16 @@ import json
 import os
 import sys
 import time
-
+​
 from echopy import Echo
-
+​
 from project import RESOURCES_DIR, BLOCK_RELEASE_INTERVAL
-
+​
 if "BASE_URL" not in os.environ:
     BASE_URL = json.load(open(os.path.join(RESOURCES_DIR, "urls.json")))["BASE_URL"]
 else:
     BASE_URL = os.environ["BASE_URL"]
-
+​
 categories = [
     # API SECTION
     'api',
@@ -22,9 +22,9 @@ categories = [
     'network_broadcast_api',
     'registration_api',
     'database_api',
-
+​
     'connection_to_apis',
-
+​
     # database_api section
     'database_api_objects',
     'database_api_subscriptions',
@@ -42,7 +42,7 @@ categories = [
     'database_api_sidechain_ethereum',
     'database_api_sidechain_erc20',
     'database_api_contract_fee_pool',
-
+​
     # OPERATIONS SECTION
     'operations',
     'account_management_operations',
@@ -58,53 +58,62 @@ categories = [
     'asset_transfer_operations',
     'vesting_balances_operations',
     'withdrawal_permissions_operations',
-
+​
     'sidechain',
     'sidechain_ethereum',
     'sidechain_erc20',
-
+​
     'scenarios',
 ]
-
+​
 types = [
     # TEST TYPES
     "main",
     "positive",
     "negative"
 ]
-
-
+​
+​
 def process_filters(filters):
     category_filters = []
     type_filters = []
     for pytests_filter in filters:
+        filter_negation = not pytests_filter.startswith("^")
+        if not filter_negation:
+            pytests_filter = pytests_filter[1:]
         if pytests_filter in types:
-            type_filters.append(pytests_filter)
+            type_filters.append([pytests_filter, filter_negation])
         else:
-            category_filters.append(pytests_filter)
-
+            category_filters.append([pytests_filter, filter_negation])
+​
     command = ""
     if len(category_filters):
         command = "{}-a ".format(command)
         for category_filter in category_filters:
-            command = "{}{} ".format(command, category_filter)
-
+            if category_filter[1]:
+                command = "{}{} ".format(command, category_filter[0])
+            else:
+                command = "{}^{} ".format(command, category_filter[0])
+​
     if len(type_filters):
         command = "{}-m ".format(command)
         for type_filter in type_filters:
-            command = "{}{}:type ".format(command, type_filter)
-
+            if type_filter[1]:
+                command = "{}{}:type ".format(command, type_filter[0])
+            else:
+                command = "{}^{}:type ".format(command, type_filter[0])
+​
     return command
-
-
+​
+​
 PYTESTS_FILTERS = "" if "PYTESTS_FILTERS" not in os.environ else os.environ["PYTESTS_FILTERS"].lower().split(":")
 PYTESTS_FILTER_COMMAND = process_filters(PYTESTS_FILTERS)
-
-
+​
+​
 def get_head_block_num(echo_connection):
     return echo_connection.api.database.get_dynamic_global_properties()["head_block_number"]
-
-
+​
+​
 def run(echo_connection, filter_command):
     if get_head_block_num(echo_connection):
         execution_status = os.system("if ! lcc run {}--exit-error-on-failure; then lcc report --failed; exit 1; fi"
@@ -113,8 +122,8 @@ def run(echo_connection, filter_command):
     else:
         time.sleep(BLOCK_RELEASE_INTERVAL)
         run(echo_connection, filter_command)
-
-
+​
+​
 echo = Echo()
 echo.connect(BASE_URL)
 run(echo, PYTESTS_FILTER_COMMAND)
