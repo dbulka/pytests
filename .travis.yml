@@ -10,8 +10,8 @@ env:
     - INIT0_PK: 5J6azg8iUcQEbxEaLAFrJbcdBjgKqewLF81A63NE4T2aeHCsKiE
     - MIGRATION_RESULT: ""
   jobs:
-    - PYTESTS_FILTERS: scenarios
-    - PYTESTS_FILTERS: ^scenarios
+    - PYTESTS_FILTERS: database_api
+    - PYTESTS_FILTERS: ^database_api
 
 install:  pip3 install -r requirements.txt
 services:
