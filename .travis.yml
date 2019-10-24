@@ -3,13 +3,15 @@ python:
   - "3.7"
 if: type = push
 cache: pip
+
 env:
-  - PYTESTS_FILTERS: scenarios
-  - PYTESTS_FILTERS: ^scenarios
   global:
     - NATHAN_PK: 5JkYKpRDWeY3DN4qjZRKpEfxCqmTX17fsBJhupE9DJVVmJoGh6C
     - INIT0_PK: 5J6azg8iUcQEbxEaLAFrJbcdBjgKqewLF81A63NE4T2aeHCsKiE
     - MIGRATION_RESULT: ""
+  jobs:
+    - PYTESTS_FILTERS: scenarios
+    - PYTESTS_FILTERS: ^scenarios
 
 install:  pip3 install -r requirements.txt
 services:
