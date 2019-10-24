@@ -39,8 +39,8 @@ class GetBlockVirtualOps(BaseTest):
         self.utils.set_timeout_until_num_blocks_released(self, self.__database_api_identifier, print_log=False)
         block_num = self.get_head_block_num()
         response_id = self.send_request(self.get_request("get_block_virtual_ops", [block_num]),
-                                        self.__database_api_identifier, debug_mode=True)
-        response = self.get_response(response_id, log_response=True)
+                                        self.__database_api_identifier)
+        response = self.get_response(response_id)
         lcc.log_info("Call method 'get_block_virtual_ops' with block_num='{}' parameter".format(block_num))
 
         check_that("result", response["result"], is_([]))
@@ -71,7 +71,7 @@ class PositiveTesting(BaseTest):
         block_num = 1
         virtual_operation_id = self.echo.config.operation_ids.BLOCK_REWARD
         response_id = self.send_request(self.get_request("get_block_virtual_ops", [block_num]),
-                                        self.__database_api_identifier, debug_mode=True)
-        block_operation_id = self.get_response(response_id, log_response=True)["result"][0]["op"][0]
+                                        self.__database_api_identifier)
+        block_operation_id = self.get_response(response_id)["result"][0]["op"][0]
         lcc.log_info("Call method 'get_block_virtual_ops' with block_num='{}' parameter".format(block_num))
         check_that("block_reward_operation", block_operation_id, is_(virtual_operation_id))
