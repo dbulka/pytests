@@ -37,6 +37,10 @@ class SetSubscribeCallback(BaseTest):
         lcc.log_info("Canceled all subscriptions successfully")
         lcc.log_info("Test {}".format(status))
 
+    def teardown_suite(self):
+        self._disconnect_to_echopy_lib()
+        super().teardown_suite()
+
     @lcc.test("Simple work of method 'set_subscribe_callback'")
     def method_main_check(self, get_random_integer):
         lcc.set_step("Set subscribe callback")
@@ -180,7 +184,7 @@ class PositiveTesting(BaseTest):
             notice,
             "head_block_number", not_equal_to(response["head_block_number"]),
             "head_block_id", not_equal_to(response["head_block_id"]),
-            "time", not_equal_to(response["time"]),
+            "time", greater_than_or_equal_to(response["time"]),
             "last_irreversible_block_num", irreversible_matcher,
         )
 
