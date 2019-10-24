@@ -27,7 +27,7 @@ class LookupAccountNames(BaseTest):
             lcc.log_info("'{}' has correct format: account_object_type".format(field))
 
     def check_account_structure(self, account_info):
-        if check_that("account_info", account_info, has_length(15)):
+        if check_that("account_info", account_info, has_length(16)):
             check_that_in(
                 account_info,
                 "network_fee_percentage", is_integer(),
@@ -39,6 +39,7 @@ class LookupAccountNames(BaseTest):
                 "blacklisted_accounts", is_list(),
                 "active_special_authority", is_list(),
                 "top_n_control_flags", is_integer(),
+                "accumulated_reward", is_integer(),
                 "extensions", is_list(),
                 quiet=True
             )
@@ -64,7 +65,7 @@ class LookupAccountNames(BaseTest):
                     lcc.log_error("Wrong format of 'cashback_vb', got: {}".format(account_info["cashback_vb"]))
                 else:
                     lcc.log_info("'cashback_vb' has correct format: vesting_balance_object_type")
-            lcc.set_step("Check 'options' field")
+            lcc.set_step("Check 'active' field")
             if check_that("active", account_info["active"], has_length(3)):
                 check_that_in(
                     account_info["active"],
@@ -74,15 +75,15 @@ class LookupAccountNames(BaseTest):
                     quiet=True
                 )
             lcc.set_step("Check 'options' field")
-            if check_that("active", account_info["options"], has_length(6)):
-                account_ids_format = ["voting_account", "delegating_account"]
-                for account_id_format in account_ids_format:
-                    self.check_fields_account_ids_format(account_info["options"], account_id_format)
+            if check_that("active", account_info["options"], has_length(3)):
+                delegating_account = account_info["options"]["delegating_account"]
+                if not self.validator.is_account_id(delegating_account):
+                    lcc.log_error("Wrong format of 'delegating_account'got: {}".format(delegating_account))
+                else:
+                    lcc.log_info("'{}' has correct format: account_object_type".format(delegating_account))
                 check_that_in(
                     account_info["options"],
                     "delegate_share", is_integer(),
-                    "num_committee", is_integer(),
-                    "votes", is_list(),
                     "extensions", is_list(),
                     quiet=True
                 )
@@ -99,7 +100,7 @@ class LookupAccountNames(BaseTest):
         params = [self.accounts[0], self.accounts[1], self.accounts[2]]
         response_id = self.send_request(self.get_request("lookup_account_names", [params]),
                                         self.__database_api_identifier)
-        response = self.get_response(response_id)
+        response = self.get_response(response_id, log_response=True)
         lcc.log_info("Call method 'lookup_account_names' with param: {}".format(params))
 
         lcc.set_step("Check length of received accounts")

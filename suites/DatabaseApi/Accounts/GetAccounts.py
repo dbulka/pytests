@@ -20,12 +20,6 @@ class GetAccounts(BaseTest):
         super().__init__()
         self.__database_api_identifier = None
 
-    def check_fields_account_ids_format(self, response, field):
-        if not self.validator.is_account_id(response[field]):
-            lcc.log_error("Wrong format of '{}', got: {}".format(field, response[field]))
-        else:
-            lcc.log_info("'{}' has correct format: account_object_type".format(field))
-
     def setup_suite(self):
         super().setup_suite()
         lcc.set_step("Setup for {}".format(self.__class__.__name__))
@@ -48,7 +42,7 @@ class GetAccounts(BaseTest):
 
         for i, account_info in enumerate(results):
             lcc.set_step("Checking account #{} - '{}'".format(i, params[i]))
-            if check_that("account_info", account_info, has_length(15)):
+            if check_that("account_info", account_info, has_length(16)):
                 check_that_in(
                     account_info,
                     "id", is_str(params[i]),
@@ -62,6 +56,7 @@ class GetAccounts(BaseTest):
                     "blacklisted_accounts", is_list(),
                     "active_special_authority", is_list(),
                     "top_n_control_flags", is_integer(),
+                    "accumulated_reward", is_integer(),
                     "extensions", is_list(),
                     quiet=True
                 )
@@ -93,15 +88,15 @@ class GetAccounts(BaseTest):
                     )
 
                 lcc.set_step("Check 'options' field")
-                if check_that("active", account_info["options"], has_length(6)):
-                    account_ids_format = ["voting_account", "delegating_account"]
-                    for account_id_format in account_ids_format:
-                        self.check_fields_account_ids_format(account_info["options"], account_id_format)
+                if check_that("options", account_info["options"], has_length(3)):
+                    delegating_account = account_info["options"]["delegating_account"]
+                    if not self.validator.is_account_id(delegating_account):
+                        lcc.log_error("Wrong format of 'delegating_account'got: {}".format(delegating_account))
+                    else:
+                        lcc.log_info("'{}' has correct format: account_object_type".format(delegating_account))
                     check_that_in(
                         account_info["options"],
                         "delegate_share", is_integer(),
-                        "num_committee", is_integer(),
-                        "votes", is_list(),
                         "extensions", is_list(),
                         quiet=True
                     )

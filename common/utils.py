@@ -327,6 +327,13 @@ class Utils(object):
     def perform_sidechain_eth_create_address_operation(base_test, registrar, database_api_id, log_broadcast=False):
         operation = base_test.echo_ops.get_sidechain_eth_create_address_operation(echo=base_test.echo,
                                                                                   account=registrar)
+        # todo: uncomment if fee != 0
+        # if registrar != base_test.echo_acc0:
+        #     temp_operation = deepcopy(operation)
+        #     broadcast_result = base_test.utils.add_balance_for_operations(base_test, registrar, temp_operation,
+        #                                                             database_api_id, log_broadcast=log_broadcast)
+        #     if not base_test.is_operation_completed(broadcast_result, expected_static_variant=0):
+        #         raise Exception("Error: can't add balance to new account, response:\n{}".format(broadcast_result))
         collected_operation = base_test.collect_operations(operation, database_api_id)
         broadcast_result = base_test.echo_ops.broadcast(echo=base_test.echo, list_operations=collected_operation,
                                                         log_broadcast=log_broadcast)
@@ -343,11 +350,11 @@ class Utils(object):
             eth_addr = eth_addr[2:]
         operation = base_test.echo_ops.get_sidechain_eth_withdraw_operation(echo=base_test.echo, account=registrar,
                                                                             eth_addr=eth_addr, value=value)
-        # todo: add when would added fee for this operation
+        # todo: uncomment if fee != 0
         # if registrar != base_test.echo_acc0:
         #     temp_operation = deepcopy(operation)
-        #     broadcast_result = self.add_balance_for_operations(base_test, registrar, temp_operation, database_api_id,
-        #                                                        log_broadcast=log_broadcast)
+        #     broadcast_result = base_test.utils.add_balance_for_operations(base_test, registrar, temp_operation,
+        #                                                                   database_api_id,log_broadcast=log_broadcast)
         #     if not base_test.is_operation_completed(broadcast_result, expected_static_variant=0):
         #         raise Exception("Error: can't add balance to new account, response:\n{}".format(broadcast_result))
         collected_operation = base_test.collect_operations(operation, database_api_id)
@@ -580,12 +587,12 @@ class Utils(object):
         return broadcast_result
 
     def perform_committee_member_create_operation(self, base_test, account_id, eth_address, btc_public_key,
-                                                  database_api_id, url="", log_broadcast=False):
+                                                  database_api_id, deposit_amount, url="", log_broadcast=False):
         operation = base_test.echo_ops.get_committee_member_create_operation(echo=base_test.echo,
                                                                              committee_member_account=account_id,
                                                                              eth_address=eth_address,
                                                                              btc_public_key=btc_public_key, url=url,
-                                                                             debug_mode=True)
+                                                                             deposit_amount=deposit_amount)
         if account_id != base_test.echo_acc0:
             temp_operation = deepcopy(operation)
             broadcast_result = self.add_balance_for_operations(base_test, account_id, temp_operation, database_api_id,
@@ -633,10 +640,7 @@ class Utils(object):
                                                                     account_auths=active["account_auths"],
                                                                     key_auths=active["key_auths"],
                                                                     echorand_key=echorand_key,
-                                                                    voting_account=options["voting_account"],
-                                                                    delegating_account=options["delegating_account"],
-                                                                    num_committee=options["num_committee"],
-                                                                    votes=options["votes"])
+                                                                    delegating_account=options["delegating_account"])
         if account_id != base_test.echo_acc0:
             temp_operation = deepcopy(operation)
             broadcast_result = self.add_balance_for_operations(base_test, account_id, temp_operation, database_api_id,
@@ -806,7 +810,7 @@ class Utils(object):
 
     def get_account_block_reward(self, base_test, account_ids, block_number, database_api_id):
         total_verifiers_balance, reward, total_verifiers_reward, delegate_reward, account_reward = 0, 0, 0, 0, 0
-        verifiers_balances, rewards = [], []
+        verifiers_balances, rewards = [], {}
         verifiers_rewards, producer_rewards = {}, {}
         verifier, producer = False, False
 
@@ -873,16 +877,16 @@ class Utils(object):
         self.set_timeout_until_num_blocks_released(base_test, database_api_id, print_log=False)
 
         lcc.set_step("Confirm account ids rewards")
-        for i, account_id in enumerate(account_ids):
+        for i, acc_id in enumerate(account_ids):
             if verifier:
-                if verifiers_rewards.get(account_id) is not None:
-                    account_reward += verifiers_rewards[account_id]
+                if verifiers_rewards.get(acc_id) is not None:
+                    account_reward += verifiers_rewards[acc_id]
             if producer:
-                if producer_rewards.get(account_id) is not None:
-                    account_reward += producer_rewards[account_id]
+                if producer_rewards.get(acc_id) is not None:
+                    account_reward += producer_rewards[acc_id]
             if verifier or producer:
-                rewards.append(account_reward)
+                rewards[acc_id] = account_reward
             else:
-                rewards.append(0)
-            lcc.log_info("'{}' account got '{}' reward".format(account_id, rewards[i]))
-        return rewards
+                rewards[acc_id] = 0
+        lcc.log_info("'{}' account got '{}' reward".format(account_id, rewards[account_id]))
+        return rewards[account_id]
