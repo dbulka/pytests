@@ -13,7 +13,7 @@ env:
     - PYTESTS_FILTERS: database_api
     - PYTESTS_FILTERS: ^database_api:connection_to_apis
 
-install:  pip3 install -r requirements.txt
+install:  pip3 install -r requirements.txt 
 services:
   - docker
 before_script:
