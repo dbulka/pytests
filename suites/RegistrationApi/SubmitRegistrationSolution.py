@@ -31,7 +31,6 @@ class SubmitRegistrationSolution(BaseTest):
 
     @lcc.tags("submit_registration_solution")
     @lcc.test("Check method submit_registration_solution of registration_api")
-    @lcc.tags("asd")
     def method_main_check(self, get_random_integer, get_random_valid_account_name):
         callback = get_random_integer
         account_name = get_random_valid_account_name
