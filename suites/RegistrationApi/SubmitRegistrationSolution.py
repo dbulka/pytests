@@ -5,7 +5,7 @@ from lemoncheesecake.matching import check_that, is_integer, is_true, equal_to
 from common.base_test import BaseTest
 
 SUITE = {
-    "description": "Registration Api"
+    "description": "Method 'submit_registration_solution'"
 }
 
 
@@ -31,6 +31,7 @@ class SubmitRegistrationSolution(BaseTest):
 
     @lcc.tags("submit_registration_solution")
     @lcc.test("Check method submit_registration_solution of registration_api")
+    @lcc.tags("asd")
     def method_main_check(self, get_random_integer, get_random_valid_account_name):
         callback = get_random_integer
         account_name = get_random_valid_account_name
@@ -52,11 +53,20 @@ class SubmitRegistrationSolution(BaseTest):
                                         self.__registration_api_identifier)
         result = self.get_response(response_id)["result"]
         check_that("'submit_registration_solution' result", result, is_true())
+
+        lcc.set_step("Check that registrated account in block transaction")
+        block_num = self.get_notice(callback)["block_num"]
+        response_id = self.send_request(self.get_request("get_block", [block_num]),
+                                        self.__database_api_identifier)
+        account_name_from_block = self.get_response(response_id)["result"]["transactions"][0]["operations"][0][1]["name"]
+        check_that("account name in block", account_name, equal_to(account_name_from_block))
+
         response_id = self.send_request(self.get_request("get_account_by_name", [account_name]),
                                         self.__database_api_identifier)
         result = self.get_response(response_id)["result"]
         check_that("new account name", result["name"], equal_to(account_name))
         check_that("new account 'echorand_key'", result["echorand_key"], equal_to(public_key))
+
 
 @lcc.prop("negative", "type")
 @lcc.tags("api", "notice", "registration_api", "submit_registration_solution")
