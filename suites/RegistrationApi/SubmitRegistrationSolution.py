@@ -56,6 +56,15 @@ class SubmitRegistrationSolution(BaseTest):
                                         self.__registration_api_identifier)
         result = self.get_response(response_id)["result"]
         check_that("'submit_registration_solution' result", result, is_true())
+
+        lcc.set_step("Check that registrated account in block transaction")
+        block_num = self.get_notice(callback)["block_num"]
+        response_id = self.send_request(self.get_request("get_block", [block_num]),
+                                        self.__database_api_identifier)
+        account_name_from_block = self.get_response(response_id)["result"]["transactions"][0]["operations"][0][1][
+            "name"]
+        check_that("account name in block", account_name, equal_to(account_name_from_block))
+
         response_id = self.send_request(self.get_request("get_account_by_name", [account_name]),
                                         self.__database_api_identifier)
         result = self.get_response(response_id)["result"]
