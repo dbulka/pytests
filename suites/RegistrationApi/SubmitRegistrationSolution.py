@@ -5,7 +5,7 @@ from lemoncheesecake.matching import check_that, is_integer, is_true, equal_to
 from common.base_test import BaseTest
 
 SUITE = {
-    "description": "Registration Api"
+    "description": "Method 'submit_registration_solution'"
 }
 
 
@@ -57,6 +57,7 @@ class SubmitRegistrationSolution(BaseTest):
         result = self.get_response(response_id)["result"]
         check_that("new account name", result["name"], equal_to(account_name))
         check_that("new account 'echorand_key'", result["echorand_key"], equal_to(public_key))
+
 
 @lcc.prop("negative", "type")
 @lcc.tags("api", "notice", "registration_api", "submit_registration_solution")
@@ -144,8 +145,9 @@ class NegativeTesting(BaseTest):
         generate_keys = self.generate_keys()
         public_key = generate_keys[1]
         rand_num, solution = self.prepare_rand_num_and_task_solution()
-        rand_num = rand_num + "1"
-        expected_error_message = "Parse Error: Couldn't parse uint64_t"
+        rand_num = rand_num + 1
+        expected_error_message = "Assert Exception: rand_num == task->rand_num: Active task has another rand_num. " \
+                                 "Request another one"
 
         lcc.set_step("Check that 'submit_registration_solution' crashes at each execution")
         account_params = [callback, account_name, public_key, public_key, solution, rand_num]
