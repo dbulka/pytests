@@ -255,9 +255,9 @@ Contract Feepool:
 
 #### [Registration API](https://echo-dev.io/developers/apis/registration-api/#registration-api)
 
-- [ ] [request_registration_task](https://docs.echo.org/api-reference/echo-node-api/registration-api#request_registration_task)
-- [ ] [submit_registration_solution](https://docs.echo.org/api-reference/echo-node-api/registration-api#submit_registration_solution-callback-name-active-echorand_key-nonce-rand_num)
-- [ ] [get_registrar](https://docs.echo.org/api-reference/echo-node-api/registration-api#submit_registration_solution-callback-name-active-echorand_key-nonce-rand_num)
+- [x] [request_registration_task](https://docs.echo.org/api-reference/echo-node-api/registration-api#request_registration_task)
+- [x] [submit_registration_solution](https://docs.echo.org/api-reference/echo-node-api/registration-api#submit_registration_solution-callback-name-active-echorand_key-nonce-rand_num)
+- [x] [get_registrar](https://docs.echo.org/api-reference/echo-node-api/registration-api#submit_registration_solution-callback-name-active-echorand_key-nonce-rand_num)
 
 
 ### Operations:

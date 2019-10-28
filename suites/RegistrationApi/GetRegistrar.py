@@ -29,6 +29,10 @@ class GetRegistrar(BaseTest):
             "API identifiers are: database='{}', registration='{}'".format(self.__database_api_identifier,
                                                                            self.__registration_api_identifier))
 
+    def teardown_suite(self):
+        self._disconnect_to_echopy_lib()
+        super().teardown_suite()
+
     @lcc.tags("get_registrar")
     @lcc.test("Check method get_registrar of registration_api")
     def method_main_check(self, get_random_integer, get_random_valid_account_name):
