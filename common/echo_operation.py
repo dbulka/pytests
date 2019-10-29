@@ -180,6 +180,20 @@ class EchoOperations(object):
             return [operation_id, asset_update_props, issuer]
         return [operation_id, asset_update_props, signer]
 
+    def get_asset_issue_operation(self, echo, issuer, value_amount, value_asset_id, issue_to_account, fee_amount=0,
+                                  fee_asset_id="1.3.0", extensions=None, signer=None, debug_mode=False):
+        if extensions is None:
+            extensions = []
+        operation_id = echo.config.operation_ids.ASSET_ISSUE
+        asset_issue_props = self.get_operation_json("asset_issue_operation")
+        asset_issue_props["fee"].update({"amount": fee_amount, "asset_id": fee_asset_id})
+        asset_issue_props.update({"issuer": issuer, "issue_to_account": issue_to_account, "extensions": extensions})
+        asset_issue_props["asset_to_issue"].update({"amount": value_amount, "asset_id": value_asset_id})
+        if debug_mode:
+            lcc.log_debug("Asset issue operation: \n{}".format(json.dumps([operation_id, asset_issue_props], indent=4)))
+        if signer is None:
+            return [operation_id, asset_issue_props, issuer]
+        return [operation_id, asset_issue_props, signer]
 
     def get_proposal_create_operation(self, echo, fee_paying_account, expiration_time, proposed_ops,
                                       review_period_seconds=None, fee_amount=0, fee_asset_id="1.3.0",
