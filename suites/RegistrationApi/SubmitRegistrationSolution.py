@@ -3,7 +3,7 @@ import random
 import string
 
 import lemoncheesecake.api as lcc
-from lemoncheesecake.matching import check_that, is_integer, is_true, equal_to
+from lemoncheesecake.matching import check_that, is_integer, is_true, equal_to, is_false
 
 from common.base_test import BaseTest
 from fixtures.base_fixtures import RANGE_OF_STR, get_random_valid_account_name
@@ -136,32 +136,24 @@ class NegativeTesting(BaseTest):
         account_name = get_random_valid_account_name()
         generate_keys = self.generate_keys()
         public_key = generate_keys[1]
-        wrong_rand_num, wrong_solution = self.prepare_rand_num_and_task_solution()
-        expected_error_message = "Assert Exception: rand_num == task->rand_num: Active task has another rand_num. " \
-                                 "Request another one"
+        rand_num, solution = self.prepare_rand_num_and_task_solution()
+        wrong_solution = solution - 1
+        expected_error_message = "Assert Exception: task.valid(): No active registration task. Request another one"
 
-        lcc.set_step("Make wrong rand_num and wrong solution")
-        account_params = [callback, account_name, public_key, public_key, wrong_solution, wrong_rand_num]
+        lcc.set_step("Check that 'submit_registration_solution' crashes with first attempt:"
+                     "wrong solution and right rand_num")
+        account_params = [callback, account_name, public_key, public_key, wrong_solution, rand_num]
         response_id = self.send_request(self.get_request("submit_registration_solution", account_params),
                                         self.__registration_api_identifier)
         result = self.get_response(response_id, negative=True)["result"]
-        check_that("error message", result, is_true())
-
-        lcc.set_step("Check that 'submit_registration_solution' crashes with first attempt:"
-                     "wrong rand_num and wrong solution")
-        rand_num, solution = self.prepare_rand_num_and_task_solution()
-        response_id = self.send_request(self.get_request("submit_registration_solution", account_params),
-                                        self.__registration_api_identifier)
-        error = self.get_response(response_id, negative=True, log_response=True)["error"]
-        check_that("error message", error["message"], equal_to(expected_error_message))
+        check_that("error message", result, is_false())
 
         lcc.set_step("Check that 'submit_registration_solution' crashes with second attempt:"
-                     "correct rand_num and correct solution")
-        account_name = get_random_valid_account_name()
-        account_params = [callback, account_name, public_key, public_key, solution-1, rand_num]
+                     "right solution and right rand_num")
+        account_params = [callback, account_name, public_key, public_key, solution, rand_num]
         response_id = self.send_request(self.get_request("submit_registration_solution", account_params),
                                         self.__registration_api_identifier)
-        error = self.get_response(response_id, negative=True, log_response=True)["error"]
+        error = self.get_response(response_id, negative=True)["error"]
         check_that("error message", error["message"], equal_to(expected_error_message))
 
     @lcc.test("Register account with wrong 'account name'")
@@ -220,9 +212,31 @@ class NegativeTesting(BaseTest):
         generate_keys = self.generate_keys()
         public_key = generate_keys[1]
         rand_num, solution = self.prepare_rand_num_and_task_solution()
-        rand_num = rand_num + "1"
+        random_decimal = str(random.randint(0, 99))
+        rand_num = rand_num[:-2] + random_decimal
         expected_error_message = "Assert Exception: rand_num == task->rand_num: Active task has another rand_num. " \
                                  "Request another one"
+
+        lcc.set_step("Check that 'submit_registration_solution' crashes at each execution")
+        account_params = [callback, account_name, public_key, public_key, solution, rand_num]
+        response_id = self.send_request(self.get_request("submit_registration_solution", account_params),
+                                        self.__registration_api_identifier)
+        error = self.get_response(response_id, negative=True)["error"]
+        check_that("error message", error["message"], equal_to(expected_error_message))
+        response_id = self.send_request(self.get_request("get_account_by_name", [account_name]),
+                                        self.__database_api_identifier)
+        result = self.get_response(response_id)["result"]
+        check_that("account creation state", result, equal_to(None))
+
+        lcc.set_step("Check that 'submit_registration_solution' crashes at each execution")
+        callback = get_random_integer
+        account_name = get_random_valid_account_name
+        generate_keys = self.generate_keys()
+        public_key = generate_keys[1]
+        rand_num, solution = self.prepare_rand_num_and_task_solution()
+        random_decimal = str(random.randint(0, 9))
+        rand_num = rand_num + random_decimal
+        expected_error_message = "Parse Error: Couldn't parse uint64_t"
 
         lcc.set_step("Check that 'submit_registration_solution' crashes at each execution")
         account_params = [callback, account_name, public_key, public_key, solution, rand_num]

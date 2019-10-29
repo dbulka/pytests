@@ -68,7 +68,7 @@ class PositiveTesting(BaseTest):
     @lcc.test("Check virtual block_reward_operation in 1st block")
     def block_reward_operation_in_firtst_block(self):
         lcc.set_step("Get the first block virtual operations in the chain")
-        block_num = 2
+        block_num = 1
         virtual_operation_id = self.echo.config.operation_ids.BLOCK_REWARD
         response_id = self.send_request(self.get_request("get_block_virtual_ops", [block_num]),
                                         self.__database_api_identifier)
