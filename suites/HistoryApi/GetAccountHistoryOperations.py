@@ -39,11 +39,18 @@ class GetAccountHistoryOperations(BaseTest):
 
     @lcc.test("Simple work of method 'get_account_history_operations'")
     def method_main_check(self):
+
+        lcc.set_step("Perform balance freeze operation")
+        operation = self.echo_ops.get_balance_freeze_operation(echo=self.echo, account=self.echo_acc0,
+                                                               value_amount=1, duration=90)
+        collected_operation = self.collect_operations(operation, self.__database_api_identifier)
+        self.echo_ops.broadcast(echo=self.echo, list_operations=collected_operation)
+
+        lcc.set_step("Get account history operations")
         operation_id = self.echo.config.operation_ids.ACCOUNT_CREATE
         operation_history_obj = "{}0".format(self.get_object_type(self.echo.config.object_types.OPERATION_HISTORY))
         stop, start = operation_history_obj, operation_history_obj
         limit = 1
-        lcc.set_step("Get account history operations")
         params = [self.echo_acc0, operation_id, start, stop, limit]
         response_id = self.send_request(self.get_request("get_account_history_operations", params),
                                         self.__history_api_identifier)
